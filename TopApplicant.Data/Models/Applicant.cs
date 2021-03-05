@@ -2,11 +2,11 @@
 {
     public class Applicant
     {
-        public string FirstName;
+        public string FirstName { get; set; }
 
-        public string LastName;
+        public string LastName { get; set; }
 
-        public Skillset Skillset;
+        public Skillset Skillset { get; set; }
 
         public Applicant(string firstName, string lastName)
         {

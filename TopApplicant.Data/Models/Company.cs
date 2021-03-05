@@ -4,9 +4,9 @@ namespace TopApplicant.Data.Models
 {
     public class Company
     {
-        public string CompanyName;
+        public string CompanyName { get; set; }
 
-        public string CompanyDesc;
+        public string CompanyDesc { get; set; }
 
         public List<JobPost> JobPostings = new List<JobPost>();
 

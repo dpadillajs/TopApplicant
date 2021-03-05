@@ -4,13 +4,13 @@ namespace TopApplicant.Data.Models
 {
     public class JobPost
     {
-        public long JobId;
+        public long JobId { get; set; }
 
-        public string JobTitle;
+        public string JobTitle { get; set; }
 
-        public string JobDesc;
+        public string JobDesc { get; set; }
 
-        public Skillset RequiredSkillset;
+        public Skillset RequiredSkillset { get; set; }
 
         public List<Applicant> Applicants = new List<Applicant>();
 
