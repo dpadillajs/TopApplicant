@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using TopApplicant.Data.Models;
+using TopApplicant.Service.Rules;
 
 namespace TopApplicant.Main
 {
@@ -11,6 +12,7 @@ namespace TopApplicant.Main
         static void Main(string[] args)
         {
             List<Company> companies = InitializeAllCompanyData();
+            var topApplicantRule = new TopApplicantPercentageRule();
 
             Console.WriteLine("What is your first name?");
             string firstName = Console.ReadLine();
@@ -24,7 +26,7 @@ namespace TopApplicant.Main
             applicant.Skillset = IdentifyApplicantSkillset();
             Console.WriteLine();
 
-            ApplyToJobPostings(companies, applicant);
+            ApplyToJobPostings(companies, applicant, topApplicantRule);
         }
 
         #region Initialize All Company Data
@@ -177,7 +179,7 @@ namespace TopApplicant.Main
             }
         }
 
-        public static void ApplyToJobPostings(List<Company> companies, Applicant applicant)
+        public static void ApplyToJobPostings(List<Company> companies, Applicant applicant, TopApplicantPercentageRule rule)
         {
             Thread.Sleep(TimeSpan.FromSeconds(2));
             Console.WriteLine("Job Postings by Company:");
@@ -198,11 +200,14 @@ namespace TopApplicant.Main
                 {
                     jobDictionary.Add(jobPost.JobId, company.CompanyName);
 
-                    // Algorithm will be implemented later.
-                    // RunTopApplicantPercentageRetrieval(applicant.Skillset, jobPost.Applicants, jobPost.RequiredSkillset);
+                    var topApplicantPercentage = rule.RetrieveTopApplicantPercentage(applicant.Skillset, jobPost.Applicants, jobPost.RequiredSkillset);
 
                     Thread.Sleep(TimeSpan.FromSeconds(1));
-                    Console.WriteLine($"{jobPost.Applicants.Count} applicants");
+
+                    Console.WriteLine(topApplicantPercentage != 0 ?
+                        $"You’re in the top {topApplicantPercentage}% of {jobPost.Applicants.Count} applicants based on your skillset!"
+                        : $"{jobPost.Applicants.Count} applicants");
+
                     Console.WriteLine($"JOBID_{jobPost.JobId} —— {jobPost.JobTitle} ({company.CompanyName})");
                     Console.WriteLine($"JOBID_{jobPost.JobId} —— {jobPost.JobDesc}");
                     Console.WriteLine($"Actively recruiting");
@@ -234,7 +239,7 @@ namespace TopApplicant.Main
                 {
                     Console.WriteLine();
                     Console.WriteLine();
-                    ApplyToJobPostings(companies, applicant);
+                    ApplyToJobPostings(companies, applicant, rule);
                     Console.WriteLine();
                 }
             }
@@ -255,54 +260,12 @@ namespace TopApplicant.Main
                     Console.WriteLine();
 
                     Console.WriteLine();
-                    ApplyToJobPostings(companies, applicant);
+                    ApplyToJobPostings(companies, applicant, rule);
                     Console.WriteLine();
                 }
             }
         }
 
         #endregion Console Interaction Methods
-
-        #region The Top Applicant Algorithm
-
-        public static void RunTopApplicantPercentageRetrieval(Skillset applicantSkillset, List<Applicant> contenders, Skillset requiredSkillset)
-        {
-            // Step One: Add Required Skills, Matching Applicant Skills, And Contender Skills To Seperate Lists
-            var employerSkillsetRequirements = new List<string>();
-            var applicantMatchedSkillset = new List<string>();
-            var contenderMatchingSkillsets = new List<List<string>>();
-
-            foreach (var contender in contenders)
-            {
-                var contenderMatchingSkillset = new List<string>();
-
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.FrontendSkills, contender.Skillset.FrontendSkills, requiredSkillset.FrontendSkills, contenderMatchingSkillset);
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.BackendSkills, contender.Skillset.BackendSkills, requiredSkillset.FrontendSkills, contenderMatchingSkillset);
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.DatabaseSkills, contender.Skillset.DatabaseSkills, requiredSkillset.FrontendSkills, contenderMatchingSkillset);
-
-                contenderMatchingSkillsets.Add(contenderMatchingSkillset);
-            }
-
-            void AddMatchingSkillsToApplicantAndContenders(dynamic applicantSkillset, dynamic contenderSkillset, dynamic requiredSkillset, List<string> contenderMatchingSkillset)
-            {
-                foreach (var conSkill in contenderSkillset.GetType().GetProperties())
-                {
-                    foreach (var appSkill in applicantSkillset.GetType().GetProperties())
-                    {
-                        foreach (var reqSkill in requiredSkillset.GetType().GetProperties())
-                        {
-                            if (reqSkill.GetValue(requiredSkillset) && !employerSkillsetRequirements.Contains(reqSkill.Name))
-                                employerSkillsetRequirements.Add(reqSkill.Name);
-                            if (appSkill.Name == reqSkill.Name && appSkill.GetValue(applicantSkillset) && reqSkill.GetValue(requiredSkillset) && !applicantMatchedSkillset.Contains(appSkill.Name))
-                                applicantMatchedSkillset.Add(appSkill.Name);
-                            if (conSkill.Name == reqSkill.Name && conSkill.GetValue(contenderSkillset) && reqSkill.GetValue(requiredSkillset) && !contenderMatchingSkillset.Contains(conSkill.Name))
-                                contenderMatchingSkillset.Add(conSkill.Name);
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
     }
 }
