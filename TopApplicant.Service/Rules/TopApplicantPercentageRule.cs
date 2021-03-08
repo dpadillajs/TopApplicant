@@ -4,9 +4,9 @@ using TopApplicant.Data.Models;
 
 namespace TopApplicant.Service.Rules
 {
-    public class TopApplicantPercentageRule
+    public sealed class TopApplicantPercentageRule
     {
-        public int RetrieveTopApplicantPercentage(Skillset applicantSkillset, List<Applicant> contenders, Skillset requiredSkillset)
+        public int RetrieveTopApplicantPercentage(SkillsetModel applicantSkillset, List<ApplicantModel> contenders, SkillsetModel requiredSkillset)
         {
             // Step One: Add Required Skills, Matching Applicant Skills, And Matching Contender Skills To Seperate Lists
             var employerSkillsetRequirements = new List<string>();
@@ -17,9 +17,9 @@ namespace TopApplicant.Service.Rules
             {
                 var contenderMatchingSkillset = new List<string>();
 
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.FrontendSkills, contender.Skillset.FrontendSkills, requiredSkillset.FrontendSkills, contenderMatchingSkillset);
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.BackendSkills, contender.Skillset.BackendSkills, requiredSkillset.FrontendSkills, contenderMatchingSkillset);
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.DatabaseSkills, contender.Skillset.DatabaseSkills, requiredSkillset.FrontendSkills, contenderMatchingSkillset);
+                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.FrontendSkillset, contender.Skillset.FrontendSkillset, requiredSkillset.FrontendSkillset, contenderMatchingSkillset);
+                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.BackendSkillset, contender.Skillset.BackendSkillset, requiredSkillset.FrontendSkillset, contenderMatchingSkillset);
+                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.DatabaseSkillset, contender.Skillset.DatabaseSkillset, requiredSkillset.FrontendSkillset, contenderMatchingSkillset);
 
                 contenderMatchingSkillsets.Add(contenderMatchingSkillset);
             }

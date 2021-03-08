@@ -11,17 +11,18 @@ namespace TopApplicant.Main
     {
         static void Main(string[] args)
         {
-            List<Company> companies = InitializeAllCompanyData();
+            var companies = InitializeAllCompanyData();
             var topApplicantRule = new TopApplicantPercentageRule();
 
             Console.WriteLine("What is your first name?");
-            string firstName = Console.ReadLine();
+            var firstName = Console.ReadLine();
+
             Console.WriteLine();
 
             Console.WriteLine("And last name?");
-            string lastName = Console.ReadLine();
+            var lastName = Console.ReadLine();
 
-            var applicant = new Applicant(firstName, lastName);
+            var applicant = new ApplicantModel(firstName, lastName);
 
             applicant.Skillset = IdentifyApplicantSkillset();
             Console.WriteLine();
@@ -31,12 +32,12 @@ namespace TopApplicant.Main
 
         #region Initialize All Company Data
 
-        public static List<Company> InitializeAllCompanyData()
+        public static List<CompanyModel> InitializeAllCompanyData()
         {
 
-            var Google = new Company("Google", "Specializes in Internet-related Services and Products.");
-            var LinkedIn = new Company("LinkedIn", "Specializes in Employment-oriented Online Services.");
-            var Amazon = new Company("Amazon", "Specializes in E-commerce, Cloud Computing, and Digital Streaming.");
+            var Google = new CompanyModel("Google", "Specializes in Internet-related Services and Products.");
+            var LinkedIn = new CompanyModel("LinkedIn", "Specializes in Employment-oriented Online Services.");
+            var Amazon = new CompanyModel("Amazon", "Specializes in E-commerce, Cloud Computing, and Digital Streaming.");
 
             Google.CreateJobPost(297, "UI Developer", "Creating UI Components in Angular for the Google Fiber Product Team.");
             Google.CreateJobPost(921, "Data Engineer", "Creating Storage Solutions for large scale applications on the Google Cloud Team.");
@@ -45,59 +46,59 @@ namespace TopApplicant.Main
             Amazon.CreateJobPost(884, ".NET Developer", "Help us build the next set of microservices for our Amazon digital products.");
             Amazon.CreateJobPost(983, "Associate Software Engineer", "Must have 1 year of experience. Technical Support for Amazon Delivery Support Teams.");
 
-            Google.CreateJobPostRequirements(297, new Skillset() {
-                FrontendSkills = new FrontendSkills() { HTML = true, CSS = true, JavaScript = true, Angular = true, AngularJS = true },
-                BackendSkills = new BackendSkills(),
-                DatabaseSkills = new DatabaseSkills()
+            Google.CreateJobPostRequirements(297, new SkillsetModel() {
+                FrontendSkillset = new FrontendSkillsetModel() { HTML = true, CSS = true, JavaScript = true, Angular = true, AngularJS = true },
+                BackendSkillset = new BackendSkillsetModel(),
+                DatabaseSkillset = new DatabaseSkillsetModel()
             });
 
-            Google.CreateJobPostRequirements(921, new Skillset() {
-                FrontendSkills = new FrontendSkills() { Python = true, Django = true },
-                BackendSkills = new BackendSkills() { GoLang = true },
-                DatabaseSkills = new DatabaseSkills() { MongoDB = true, MSSQL = true, TransactSQL = true }
+            Google.CreateJobPostRequirements(921, new SkillsetModel() {
+                FrontendSkillset = new FrontendSkillsetModel() { Python = true, Django = true },
+                BackendSkillset = new BackendSkillsetModel() { GoLang = true },
+                DatabaseSkillset = new DatabaseSkillsetModel() { MongoDB = true, MSSQL = true, TransactSQL = true }
             });
 
-            LinkedIn.CreateJobPostRequirements(207, new Skillset() {
-                FrontendSkills = new FrontendSkills() {  Angular = true, React = true, Vue = true },
-                BackendSkills = new BackendSkills() { CSharp = true, DotNetCore = true, Java = true, SpringFramework = true },
-                DatabaseSkills = new DatabaseSkills() { MongoDB = true, PostgresSQL = true }
+            LinkedIn.CreateJobPostRequirements(207, new SkillsetModel() {
+                FrontendSkillset = new FrontendSkillsetModel() {  Angular = true, React = true, Vue = true },
+                BackendSkillset = new BackendSkillsetModel() { CSharp = true, DotNetCore = true, Java = true, SpringFramework = true },
+                DatabaseSkillset = new DatabaseSkillsetModel() { MongoDB = true, PostgresSQL = true }
             });
 
-            LinkedIn.CreateJobPostRequirements(722, new Skillset() {
-                FrontendSkills = new FrontendSkills() { HTML = true, CSS = true, JavaScript = true, React = true, TypeScript = true },
-                BackendSkills = new BackendSkills() { Node = true },
-                DatabaseSkills = new DatabaseSkills() { PostgresSQL = true }
+            LinkedIn.CreateJobPostRequirements(722, new SkillsetModel() {
+                FrontendSkillset = new FrontendSkillsetModel() { HTML = true, CSS = true, JavaScript = true, React = true, TypeScript = true },
+                BackendSkillset = new BackendSkillsetModel() { Node = true },
+                DatabaseSkillset = new DatabaseSkillsetModel() { PostgresSQL = true }
             });
 
-            Amazon.CreateJobPostRequirements(884, new Skillset() {
-                FrontendSkills = new FrontendSkills() {  HTML = true, CSS = true, JavaScript = true, Vue = true, TypeScript = true },
-                BackendSkills = new BackendSkills() { CSharp = true, DotNetCore = true },
-                DatabaseSkills = new DatabaseSkills() { MSSQL = true, TransactSQL = true }
+            Amazon.CreateJobPostRequirements(884, new SkillsetModel() {
+                FrontendSkillset = new FrontendSkillsetModel() {  HTML = true, CSS = true, JavaScript = true, Vue = true, TypeScript = true },
+                BackendSkillset = new BackendSkillsetModel() { CSharp = true, DotNetCore = true },
+                DatabaseSkillset = new DatabaseSkillsetModel() { MSSQL = true, TransactSQL = true }
             });
 
-            Amazon.CreateJobPostRequirements(983, new Skillset() {
-                FrontendSkills = new FrontendSkills() { HTML = true, CSS = true, JavaScript = true },
-                BackendSkills = new BackendSkills() { Node = true },
-                DatabaseSkills = new DatabaseSkills()
+            Amazon.CreateJobPostRequirements(983, new SkillsetModel() {
+                FrontendSkillset = new FrontendSkillsetModel() { HTML = true, CSS = true, JavaScript = true },
+                BackendSkillset = new BackendSkillsetModel() { Node = true },
+                DatabaseSkillset = new DatabaseSkillsetModel()
             });
 
-            return InitializeJobApplicants(new List<Company>() { Google, LinkedIn, Amazon });
+            return InitializeJobApplicants(new List<CompanyModel>() { Google, LinkedIn, Amazon });
         }
 
-        public static List<Company> InitializeJobApplicants(List<Company> companies)
+        public static List<CompanyModel> InitializeJobApplicants(List<CompanyModel> companies)
         {
-            var applicants = new List<Applicant>()
+            var applicants = new List<ApplicantModel>()
             {
-                new Applicant("David", "Padilla"),
-                new Applicant("Don", "Draper"),
-                new Applicant("Rick", "Grimes"),
-                new Applicant("Sarah", "Connor"),
-                new Applicant("Jon", "Snow"),
-                new Applicant("Walter", "White"),
-                new Applicant("Ragnar", "Lothbrok"),
-                new Applicant("Dwayne", "Johnson"),
-                new Applicant("Sabrina", "Spellman"),
-                new Applicant("Daphne", "Bridgerton")
+                new ApplicantModel("David", "Padilla"),
+                new ApplicantModel("Don", "Draper"),
+                new ApplicantModel("Rick", "Grimes"),
+                new ApplicantModel("Sarah", "Connor"),
+                new ApplicantModel("Jon", "Snow"),
+                new ApplicantModel("Walter", "White"),
+                new ApplicantModel("Ragnar", "Lothbrok"),
+                new ApplicantModel("Dwayne", "Johnson"),
+                new ApplicantModel("Sabrina", "Spellman"),
+                new ApplicantModel("Daphne", "Bridgerton")
             };
 
             foreach (var applicant in applicants)
@@ -113,23 +114,23 @@ namespace TopApplicant.Main
                 }
             }
 
-            Skillset Randomizer()
+            SkillsetModel Randomizer()
             {
-                var skillset = new Skillset()
+                var skillset = new SkillsetModel()
                 {
-                    FrontendSkills = new FrontendSkills(),
-                    BackendSkills = new BackendSkills(),
-                    DatabaseSkills = new DatabaseSkills()
+                    FrontendSkillset = new FrontendSkillsetModel(),
+                    BackendSkillset = new BackendSkillsetModel(),
+                    DatabaseSkillset = new DatabaseSkillsetModel()
                 };
 
-                foreach (var lang in skillset.FrontendSkills.GetType().GetProperties())
-                    lang.SetValue(skillset.FrontendSkills, Convert.ToBoolean(Math.Round(new Random().NextDouble())));
+                foreach (var lang in skillset.FrontendSkillset.GetType().GetProperties())
+                    lang.SetValue(skillset.FrontendSkillset, Convert.ToBoolean(Math.Round(new Random().NextDouble())));
 
-                foreach (var lang in skillset.BackendSkills.GetType().GetProperties())
-                    lang.SetValue(skillset.BackendSkills, Convert.ToBoolean(Math.Round(new Random().NextDouble())));
+                foreach (var lang in skillset.BackendSkillset.GetType().GetProperties())
+                    lang.SetValue(skillset.BackendSkillset, Convert.ToBoolean(Math.Round(new Random().NextDouble())));
 
-                foreach (var lang in skillset.DatabaseSkills.GetType().GetProperties())
-                    lang.SetValue(skillset.DatabaseSkills, Convert.ToBoolean(Math.Round(new Random().NextDouble())));
+                foreach (var lang in skillset.DatabaseSkillset.GetType().GetProperties())
+                    lang.SetValue(skillset.DatabaseSkillset, Convert.ToBoolean(Math.Round(new Random().NextDouble())));
 
                 return skillset;
             }
@@ -142,18 +143,18 @@ namespace TopApplicant.Main
 
         #region Console Interaction Methods
 
-        public static Skillset IdentifyApplicantSkillset()
+        public static SkillsetModel IdentifyApplicantSkillset()
         {
-            var skillset = new Skillset()
+            var skillset = new SkillsetModel()
             {
-                FrontendSkills = new FrontendSkills(),
-                BackendSkills = new BackendSkills(),
-                DatabaseSkills = new DatabaseSkills()
+                FrontendSkillset = new FrontendSkillsetModel(),
+                BackendSkillset = new BackendSkillsetModel(),
+                DatabaseSkillset = new DatabaseSkillsetModel()
             };
 
-            SkillsetQuestionaire("front-end", skillset.FrontendSkills);
-            SkillsetQuestionaire("back-end", skillset.BackendSkills);
-            SkillsetQuestionaire("database", skillset.DatabaseSkills);
+            SkillsetQuestionaire("front-end", skillset.FrontendSkillset);
+            SkillsetQuestionaire("back-end", skillset.BackendSkillset);
+            SkillsetQuestionaire("database", skillset.DatabaseSkillset);
 
             return skillset;
 
@@ -179,7 +180,7 @@ namespace TopApplicant.Main
             }
         }
 
-        public static void ApplyToJobPostings(List<Company> companies, Applicant applicant, TopApplicantPercentageRule rule)
+        public static void ApplyToJobPostings(List<CompanyModel> companies, ApplicantModel applicant, TopApplicantPercentageRule rule)
         {
             Thread.Sleep(TimeSpan.FromSeconds(2));
             Console.WriteLine("Job Postings by Company:");
