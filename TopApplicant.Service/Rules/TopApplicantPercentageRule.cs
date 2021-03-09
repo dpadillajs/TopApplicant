@@ -18,8 +18,8 @@ namespace TopApplicant.Service.Rules
                 var contenderMatchingSkillset = new List<string>();
 
                 AddMatchingSkillsToApplicantAndContenders(applicantSkillset.FrontendSkillset, contender.Skillset.FrontendSkillset, requiredSkillset.FrontendSkillset, contenderMatchingSkillset);
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.BackendSkillset, contender.Skillset.BackendSkillset, requiredSkillset.FrontendSkillset, contenderMatchingSkillset);
-                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.DatabaseSkillset, contender.Skillset.DatabaseSkillset, requiredSkillset.FrontendSkillset, contenderMatchingSkillset);
+                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.BackendSkillset, contender.Skillset.BackendSkillset, requiredSkillset.BackendSkillset, contenderMatchingSkillset);
+                AddMatchingSkillsToApplicantAndContenders(applicantSkillset.DatabaseSkillset, contender.Skillset.DatabaseSkillset, requiredSkillset.DatabaseSkillset, contenderMatchingSkillset);
 
                 contenderMatchingSkillsets.Add(contenderMatchingSkillset);
             }
