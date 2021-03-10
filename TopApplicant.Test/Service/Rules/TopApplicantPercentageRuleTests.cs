@@ -11,7 +11,7 @@ namespace TopApplicant.Test.Service.Rules
     {
 
         [Fact, PositiveTest]
-        public void ShouldReturnTop10Percentage_WhenProcessing_ApplicantSkillset()
+        public void ShouldReturnTop10Percentage_WhenProcessing_GivenApplicantSkillset()
         {
             Given.ApplicantSkillset = new SkillsetModel()
             {
@@ -26,7 +26,7 @@ namespace TopApplicant.Test.Service.Rules
         }
 
         [Fact, PositiveTest]
-        public void ShouldReturnTop25Percentage_WhenProcessing_ApplicantSkillset()
+        public void ShouldReturnTop25Percentage_WhenProcessing_GivenApplicantSkillset()
         {
             Given.ApplicantSkillset = new SkillsetModel()
             {
@@ -41,7 +41,7 @@ namespace TopApplicant.Test.Service.Rules
         }
 
         [Fact, PositiveTest]
-        public void ShouldReturnTop50Percentage_WhenProcessing_ApplicantSkillset()
+        public void ShouldReturnTop50Percentage_WhenProcessing_GivenApplicantSkillset()
         {
             Given.ApplicantSkillset = new SkillsetModel()
             {
@@ -56,7 +56,7 @@ namespace TopApplicant.Test.Service.Rules
         }
 
         [Fact, PositiveTest]
-        public void ShouldReturnNoTopPercentage_WhenProcessing_ApplicantSkillset()
+        public void ShouldReturnNoTopPercentage_WhenProcessing_GivenApplicantSkillset()
         {
             Given.ApplicantSkillset = new SkillsetModel()
             {

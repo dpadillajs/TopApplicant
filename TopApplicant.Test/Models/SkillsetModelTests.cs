@@ -62,16 +62,6 @@ namespace TopApplicant.Test.Models
         protected override void Creating()
         {
             Then.Validator = new SkillsetModel.Validator();
-
-            SetupModel();
-        }
-
-        private void SetupModel()
-        {
-            if (GivensDefined("Model") == false)
-            {
-                Given.Model = new SkillsetModel();
-            }
         }
 
         private void ValidatingModel()

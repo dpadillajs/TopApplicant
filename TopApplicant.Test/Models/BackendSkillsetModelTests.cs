@@ -17,7 +17,7 @@ namespace TopApplicant.Test.Models
         }
 
         [Fact, PositiveTest]
-        public void ShouldHaveValidModel_WHenValidatingModel_GivenValidModel()
+        public void ShouldHaveValidModel_WhenValidatingModel_GivenValidModel()
         {
             Given.Model = new BackendSkillsetModel
             {
@@ -38,16 +38,6 @@ namespace TopApplicant.Test.Models
         protected override void Creating()
         {
             Then.Validator = new BackendSkillsetModel.Validator();
-
-            SetupModel();
-        }
-
-        private void SetupModel()
-        {
-            if (GivensDefined("Model") == false)
-            {
-                Given.Model = new BackendSkillsetModel();
-            }
         }
 
         private void ValidatingModel()

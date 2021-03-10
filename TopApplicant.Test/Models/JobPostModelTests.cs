@@ -87,16 +87,6 @@ namespace TopApplicant.Test.Models
         protected override void Creating()
         {
             Then.Validator = new JobPostModel.Validator();
-
-            SetupModel();
-        }
-
-        private void SetupModel()
-        {
-            if (GivensDefined("Model") == false)
-            {
-                Given.Model = new JobPostModel(1, "Front End Developer", "Enhancing Retail Website Design");
-            }
         }
 
         private void ValidatingModel()

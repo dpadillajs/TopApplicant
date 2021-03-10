@@ -43,16 +43,6 @@ namespace TopApplicant.Test.Models
         protected override void Creating()
         {
             Then.Validator = new FrontendSkillsetModel.Validator();
-
-            SetupModel();
-        }
-
-        private void SetupModel()
-        {
-            if (GivensDefined("Model") == false)
-            {
-                Given.Model = new FrontendSkillsetModel();
-            }
         }
 
         private void ValidatingModel()

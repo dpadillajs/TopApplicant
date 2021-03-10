@@ -36,16 +36,6 @@ namespace TopApplicant.Test.Models
         protected override void Creating()
         {
             Then.Validator = new ApplicantModel.Validator();
-
-            SetupModel();
-        }
-
-        private void SetupModel()
-        {
-            if (GivensDefined("Model") == false)
-            {
-                Given.Model = new ApplicantModel("John", "Doe");
-            }
         }
 
         private void ValidatingModel()
